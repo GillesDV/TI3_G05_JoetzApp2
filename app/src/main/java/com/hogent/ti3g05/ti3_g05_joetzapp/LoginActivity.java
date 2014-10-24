@@ -5,8 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -87,6 +87,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 //TO DO
                 //redirect naar vorige/andere pagina.
 
+                Intent intent2 = new Intent(LoginActivity.this, MainScreen.class);
+                startActivity(intent2);
+
             }
         });
 
@@ -149,6 +152,19 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
+
+        if(email.equals("test@test.com") && password.equals("test1")){
+            //juist dus naar homescreen && gebruiker inloggen
+            Intent intent = new Intent(this, MainScreen.class);
+            startActivity(intent);
+
+
+        }else{
+            mEmailView.setError(getString(R.string.error_invalid_password));
+            focusView = mEmailView;
+            cancel = true;
+        }
+
     }
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -157,7 +173,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return (password.length() > 4) && (password.length() < 8);
     }
 
     /**
