@@ -1,9 +1,12 @@
 package com.hogent.ti3g05.ti3_g05_joetzapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class activiteit_overzicht extends Activity {
@@ -12,6 +15,16 @@ public class activiteit_overzicht extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activiteit_overzicht);
+
+        Button uitloggenButton = (Button) findViewById(R.id.MainScreen_btnUitloggen);
+
+        uitloggenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(activiteit_overzicht.this, LoginActivity.class);
+                startActivity(intent1);
+            }
+        });
     }
 
 

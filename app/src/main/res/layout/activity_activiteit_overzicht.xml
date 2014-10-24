@@ -29,7 +29,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/imageButton"
-                android:layout_below="@+id/MainScreen_btnUitloggen"
+                android:layout_below="@id/MainScreen_btnUitloggen"
                 android:layout_alignParentStart="true" />
 
             <TextView
@@ -47,8 +47,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Oostende - 02/04/2015"
                 android:id="@+id/textView2"
-                android:layout_below="@+id/txtTitelKamp"
-                android:layout_alignStart="@+id/txtTitelKamp"
+                android:layout_below="@id/txtTitelKamp"
+                android:layout_alignStart="@id/txtTitelKamp"
                 android:layout_marginTop="10dp" />
 
             <TextView
@@ -57,8 +57,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Dit kampt duur 2 dagen."
                 android:id="@+id/textView3"
-                android:layout_below="@+id/textView2"
-                android:layout_alignStart="@+id/textView2"
+                android:layout_below="@id/textView2"
+                android:layout_alignStart="@id/textView2"
                 android:layout_marginTop="10dp"/>
 
             <TextView
@@ -67,7 +67,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Lees meer"
                 android:id="@+id/textView"
-                android:layout_below="@+id/textView3"
+                android:layout_below="@id/textView3"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"/>
 
@@ -77,8 +77,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Dit kamp duurt 5 dagen."
                 android:id="@+id/textView4"
-                android:layout_below="@+id/textView5"
-                android:layout_alignStart="@+id/textView5"
+                android:layout_below="@id/textView5"
+                android:layout_alignStart="@id/textView5"
                 android:layout_marginTop="10dp" />
 
             <TextView
@@ -87,9 +87,9 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Londen - 24/11/2015"
                 android:id="@+id/textView5"
-                android:layout_toStartOf="@+id/MainScreen_btnInloggen"
-                android:layout_below="@+id/textView6"
-                android:layout_alignStart="@+id/textView6"
+                android:layout_toStartOf="@id/MainScreen_btnInloggen"
+                android:layout_below="@id/textView6"
+                android:layout_alignStart="@id/textView6"
                 android:layout_marginTop="10dp" />
 
             <TextView
@@ -98,14 +98,14 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Trip naar Londen"
                 android:id="@+id/textView6"
-                android:layout_alignTop="@+id/imageButton2"
-                android:layout_toEndOf="@+id/imageButton2" />
+                android:layout_alignTop="@id/imageButton2"
+                android:layout_toEndOf="@id/imageButton2" />
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/imageButton2"
-                android:layout_below="@+id/imageButton"
+                android:layout_below="@id/imageButton"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="30dp" />
 
