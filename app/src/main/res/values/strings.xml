@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TI3_G05_JoetzApp</string>
+    <string name="app_name">Joetz</string>
 
     <!-- Strings related to login -->
     <string name="action_sign_in">Inloggen</string>
@@ -12,6 +12,7 @@
     <string name="error_invalid_password">Het wachtwoord is te kort.</string>
     <string name="error_incorrect_password">Het wachtwoord is incorrect.</string>
     <string name="error_field_required">Verplicht in te vullen.</string>
+
 
     <!-- Strings related to Main screen -->
     <string name="title_activity_main_screen">Home</string>

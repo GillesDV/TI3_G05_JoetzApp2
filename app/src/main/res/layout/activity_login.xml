@@ -71,6 +71,19 @@
             </LinearLayout>
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/error_invalid_email"
+                android:textColor="#F00"
+                android:id="@+id/txtInlogError"
+                android:layout_below="@+id/login_form"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"  />
+
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceLarge"

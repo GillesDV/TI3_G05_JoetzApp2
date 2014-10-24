@@ -50,7 +50,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
     private View mLoginFormView;
 
     @Override
@@ -81,9 +80,17 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 attemptLogin();
             }
         });
+        Button mLoginGoBack = (Button) findViewById(R.id.GoBack_button);
+        mLoginGoBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TO DO
+                //redirect naar vorige/andere pagina.
+
+            }
+        });
 
         mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     private void populateAutoComplete() {
@@ -173,18 +180,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 }
             });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
