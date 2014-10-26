@@ -4,8 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -27,6 +30,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.Toast;
+
 
 
 /**
@@ -51,6 +56,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mLoginFormView;
+    private Gebruiker gebruiker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,21 +155,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password, this);
             mAuthTask.execute((Void) null);
         }
 
-        if(email.equals("test@test.com") && password.equals("test1")){
-            //juist dus naar homescreen && gebruiker inloggen
-            Intent intent = new Intent(this, MainScreen.class);
-            startActivity(intent);
 
-
-        }else{
-            mEmailView.setError(getString(R.string.error_invalid_password));
-            focusView = mEmailView;
-            cancel = true;
-        }
 
     }
     private boolean isEmailValid(String email) {
@@ -265,33 +261,35 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
         private final String mEmail;
         private final String mPassword;
+        private final Context mContext;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, Context context) {
             mEmail = email;
             mPassword = password;
+            mContext= context;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            DBTools dbTools=null;
+            try{
+                dbTools = new DBTools(mContext);
+                gebruiker = dbTools.getUser(mEmail);
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                if (gebruiker.userId>0) {
+                    // Account exists, check password.
+                    if (gebruiker.wachtwoord.equals(mPassword))
+                        return true;
+                    else
+                        return false;
+                } else {
+                    gebruiker.wachtwoord=mPassword;
+                    return true;
                 }
+            } finally{
+                if (dbTools!=null)
+                    dbTools.close();
             }
-
-            // TODO: register the new account here.
-            return true;
         }
 
         @Override
@@ -300,7 +298,45 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(false);
 
             if (success) {
-                finish();
+                if (gebruiker.userId>0){
+                    finish();
+                    Intent myIntent = new Intent(LoginActivity.this,MainScreen.class);
+                    LoginActivity.this.startActivity(myIntent);
+                } else {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    DBTools dbTools=null;
+                                    try{
+                                        finish();
+                                        dbTools = new DBTools(mContext);
+                                        gebruiker=dbTools.insertUser(gebruiker);
+                                        Toast myToast = Toast.makeText(mContext,R.string.updatingReport, Toast.LENGTH_SHORT);
+                                        myToast.show();
+
+                                        //Zou registreren moeten worden denk ik
+                                        Intent myIntent = new Intent(LoginActivity.this,MainScreen.class);
+                                        LoginActivity.this.startActivity(myIntent);
+                                    } finally{
+                                        if (dbTools!=null)
+                                            dbTools.close();
+                                    }
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                                    mPasswordView.requestFocus();
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this.mContext);
+                    builder.setMessage(R.string.confirm_registry).setPositiveButton(R.string.ja, dialogClickListener)
+                            .setNegativeButton(R.string.nee, dialogClickListener).show();
+                }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

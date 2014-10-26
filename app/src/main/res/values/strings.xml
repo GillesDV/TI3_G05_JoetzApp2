@@ -26,5 +26,10 @@
     <string name="title_activity_activiteit_overzicht">activiteit_overzicht</string>
     <string name="title_activity_profiel_detail">profiel_detail</string>
     <string name="title_activity_profiel_edit">profiel_edit</string>
+    <string name="updatingReport" >U bent ingelogd</string>
+    <string name="confirm_registry">Email is niet gevonden. Wilt u een nieuwe gebruiker aanmaken?</string>
+    <string name="nee">nee</string>
+    <string name="ja">ja</string>
+
 
 </resources>
