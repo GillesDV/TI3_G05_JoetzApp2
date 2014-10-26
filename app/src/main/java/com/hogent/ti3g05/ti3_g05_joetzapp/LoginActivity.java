@@ -262,6 +262,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         private final String mEmail;
         private final String mPassword;
         private final Context mContext;
+        String passwordGebr = mPasswordView.getText().toString();
 
         UserLoginTask(String email, String password, Context context) {
             mEmail = email;
@@ -271,26 +272,28 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            DBTools dbTools=null;
-            try{
-                dbTools = new DBTools(mContext);
-                gebruiker = dbTools.getUser(mEmail);
+            //DBTools dbTools=null;
+            //try{
+                //dbTools = new DBTools(mContext);
+                //gebruiker = dbTools.getUser(mEmail);
+                String emailGebruiker = mEmailView.getText().toString();
 
-                if (gebruiker.userId>0) {
+                //if (gebruiker.userId>0) {
                     // Account exists, check password.
-                    if (gebruiker.wachtwoord.equals(mPassword))
+                    //if (gebruiker.wachtwoord.equals(mPassword))
+            if(passwordGebr.equals(mPassword))
                         return true;
                     else
                         return false;
-                } else {
-                    gebruiker.wachtwoord=mPassword;
-                    return true;
-                }
-            } finally{
-                if (dbTools!=null)
-                    dbTools.close();
-            }
-        }
+                } //else {
+                   // gebruiker.wachtwoord=mPassword;
+                    //return true;
+                //}
+            //} finally{
+                //if (dbTools!=null)
+                    //dbTools.close();
+           // }
+       // }
 
         @Override
         protected void onPostExecute(final Boolean success) {
