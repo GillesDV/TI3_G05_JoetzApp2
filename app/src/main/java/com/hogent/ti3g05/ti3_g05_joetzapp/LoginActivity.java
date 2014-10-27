@@ -276,8 +276,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             //try{
                 //dbTools = new DBTools(mContext);
                 //gebruiker = dbTools.getUser(mEmail);
-                String emailGebruiker = mEmailView.getText().toString();
-
                 //if (gebruiker.userId>0) {
                     // Account exists, check password.
                     //if (gebruiker.wachtwoord.equals(mPassword))
@@ -304,6 +302,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 if (gebruiker.userId>0){
                     finish();
                     Intent myIntent = new Intent(LoginActivity.this,MainScreen.class);
+                    Toast myToast = Toast.makeText(mContext,R.string.updatingReport, Toast.LENGTH_SHORT);
+                    myToast.show();
                     LoginActivity.this.startActivity(myIntent);
                 } else {
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
