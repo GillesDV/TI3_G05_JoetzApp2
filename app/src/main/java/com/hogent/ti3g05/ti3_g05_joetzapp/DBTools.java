@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.hogent.ti3g05.ti3_g05_joetzapp.domein.Gebruiker;
+
 
 public class DBTools extends SQLiteOpenHelper {
 
@@ -44,9 +46,9 @@ public class DBTools extends SQLiteOpenHelper {
     public Gebruiker insertUser (Gebruiker queryValues){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("username", queryValues.gebruikersnaam);
-        values.put("password", queryValues.wachtwoord);
-        queryValues.userId=database.insert("logins", null, values);
+        values.put("username", queryValues.getEmail());
+        values.put("password", queryValues.getWachtwoord());
+        queryValues.setUserId(database.insert("logins", null, values));
         database.close();
         return queryValues;
     }
@@ -54,11 +56,11 @@ public class DBTools extends SQLiteOpenHelper {
     public int updateUserPassword (Gebruiker queryValues){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("username", queryValues.gebruikersnaam);
-        values.put("password", queryValues.wachtwoord);
-        queryValues.userId=database.insert("logins", null, values);
+        values.put("username", queryValues.getEmail());
+        values.put("password", queryValues.getWachtwoord());
+        queryValues.setUserId(database.insert("logins", null, values));
         database.close();
-        return database.update("logins", values, "userId = ?", new String[] {String.valueOf(queryValues.userId)});
+        return database.update("logins", values, "userId = ?", new String[] {String.valueOf(queryValues.getUserId())});
     }
 
     public Gebruiker getUser (String gebruikersnaam){
@@ -68,8 +70,8 @@ public class DBTools extends SQLiteOpenHelper {
         Cursor cursor = database.rawQuery(query, null);
         if (cursor.moveToFirst()){
             do {
-                myUser.userId=cursor.getLong(0);
-                myUser.wachtwoord=cursor.getString(1);
+                myUser.setUserId(cursor.getLong(0));
+                myUser.setWachtwoord(cursor.getString(1));
             } while (cursor.moveToNext());
         }
         return myUser;

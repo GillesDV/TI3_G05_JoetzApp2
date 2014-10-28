@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.widget.Toast;
 
+import com.hogent.ti3g05.ti3_g05_joetzapp.domein.Gebruiker;
 
 
 /**
@@ -299,11 +300,14 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(false);
 
             if (success) {
-                if (gebruiker.userId>0){
+                if (gebruiker.getUserId()>0){//gebruiker is succesvol ingelogd.
                     finish();
                     Intent myIntent = new Intent(LoginActivity.this,MainScreen.class);
                     Toast myToast = Toast.makeText(mContext,R.string.updatingReport, Toast.LENGTH_SHORT);
                     myToast.show();
+                    //steek gegevens in SharedPreferences
+
+
                     LoginActivity.this.startActivity(myIntent);
                 } else {
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
